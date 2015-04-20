@@ -2,19 +2,32 @@ import DS from 'ember-data';
 
 var User = DS.Model.extend({
   name: DS.attr('string'),
-  username: DS.attr('string'), // must be unique
+  username: DS.attr('string'), // must be unique, see below to return as primaryKey
   hashedPassword: DS.attr('string'),
   salt: DS.attr('string'),
 
   // doesn't seem like this is needed to create an account, but it is required for resetting the password
   // https://www.dropbox.com/sh/3fq2wxngbugdm0y/AACZN_42lWtNJD19Vgc8fjnya?dl=0#lh:null-Create.png)
-  email: DS.attr('string'), // unique?
+  email: DS.attr('string'), // should be unique
 
   // TODO: use custom queries to fetch the below
   posts: DS.hasMany('post'),
   followers: DS.hasMany('user'),
-  following: DS.hasMany('user')
+  following: DS.hasMany('user'),
+
+  createdAt: attr('string', {
+    defaultValue: function() { return new Date(); }
+  })
 });
+
+/*
+ TODO: Use custom serializer to map primaryKey to username field
+
+ App.UserSerializer = DS.JSONSerializer.extend({
+   primaryKey: 'username'
+ });
+
+ */
 
 User.FIXTURES = [
   {
