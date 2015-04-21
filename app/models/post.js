@@ -28,6 +28,7 @@ Post.FIXTURES = [
     timestamp: new Date("2015-03-25")
   },
   {
+    id: 3,
     owner: 2,
     author: 2,
     content: "My answer to What are the advantages of using Ember.js? http://qr.ae/qVycR",

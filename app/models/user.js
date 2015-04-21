@@ -37,9 +37,9 @@ User.FIXTURES = [
     hashedPassword: "asdf",
     salt: "asdf",
     email: "david@telegram.com",
-    posts: [],
-    followers: [],
-    following: []
+    posts: [1],
+    followers: [2, 3],
+    following: [2, 3]
   },
   {
     id: 2,
@@ -48,9 +48,9 @@ User.FIXTURES = [
     hashedPassword: "asdf",
     salt: "asdf",
     email: "andrei@telegram.com",
-    posts: [],
-    followers: [],
-    following: []
+    posts: [2, 3],
+    followers: [1, 3],
+    following: [1, 3]
   },
   {
     id: 3,
@@ -60,7 +60,7 @@ User.FIXTURES = [
     salt: "asdf",
     email: "octav@telegram.com",
     posts: [],
-    followers: [],
+    followers: [1, 2],
     following: []
   }
 ];
