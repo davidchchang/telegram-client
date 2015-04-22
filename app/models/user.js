@@ -11,9 +11,15 @@ var User = DS.Model.extend({
   email: DS.attr('string'), // should be unique
 
   // TODO: use custom queries to fetch the below
-  posts: DS.hasMany('post'),
-  followers: DS.hasMany('user'),
-  following: DS.hasMany('user'),
+  posts: DS.hasMany('post', {
+    inverse: 'owner'
+  }),
+  followers: DS.hasMany('user', {
+    inverse: 'following'
+  }),
+  following: DS.hasMany('user', {
+    inverse: 'followers'
+  }),
 
   createdAt: DS.attr('string', {
     defaultValue: function() { return new Date(); }
