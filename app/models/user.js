@@ -15,7 +15,7 @@ var User = DS.Model.extend({
   followers: DS.hasMany('user'),
   following: DS.hasMany('user'),
 
-  createdAt: attr('string', {
+  createdAt: DS.attr('string', {
     defaultValue: function() { return new Date(); }
   })
 });
