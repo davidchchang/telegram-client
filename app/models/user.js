@@ -29,40 +29,42 @@ var User = DS.Model.extend({
 
  */
 
-User.FIXTURES = [
-  {
-    id: 1,
-    name: "David Chang",
-    username: "davidchchang",
-    hashedPassword: "asdf",
-    salt: "asdf",
-    email: "david@telegram.com",
-    posts: [1],
-    followers: [2, 3],
-    following: [2, 3]
-  },
-  {
-    id: 2,
-    name: "Andrei Soare",
-    username: "andreisoare",
-    hashedPassword: "asdf",
-    salt: "asdf",
-    email: "andrei@telegram.com",
-    posts: [2, 3],
-    followers: [1, 3],
-    following: [1, 3]
-  },
-  {
-    id: 3,
-    name: "Octav Druta",
-    username: "octavdruta",
-    hashedPassword: "asdf",
-    salt: "asdf",
-    email: "octav@telegram.com",
-    posts: [],
-    followers: [1, 2],
-    following: []
-  }
-];
+User.reopenClass({
+  FIXTURES: [
+    {
+      id: 1,
+      name: "David Chang",
+      username: "davidchchang",
+      hashedPassword: "asdf",
+      salt: "asdf",
+      email: "david@telegram.com",
+      posts: [1],
+      followers: [2, 3],
+      following: [2, 3]
+    },
+    {
+      id: 2,
+      name: "Andrei Soare",
+      username: "andreisoare",
+      hashedPassword: "asdf",
+      salt: "asdf",
+      email: "andrei@telegram.com",
+      posts: [2, 3],
+      followers: [1, 3],
+      following: [1, 3]
+    },
+    {
+      id: 3,
+      name: "Octav Druta",
+      username: "octavdruta",
+      hashedPassword: "asdf",
+      salt: "asdf",
+      email: "octav@telegram.com",
+      posts: [],
+      followers: [1, 2],
+      following: []
+    }
+  ]
+});
 
 export default User;

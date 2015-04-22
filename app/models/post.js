@@ -12,28 +12,30 @@ var Post = DS.Model.extend({
   // - when a post is reposted, is the original timestamp displayed?
 });
 
-Post.FIXTURES = [
-  {
-    id: 1,
-    owner: 1,
-    author: 1,
-    content: "Spot on - https://www.youtube.com/watch?v=vVw1aPUybB8 #internet #party",
-    timestamp: new Date("2015-03-24")
-  },
-  {
-    id: 2,
-    owner: 2,
-    author: 1,
-    content: "Spot on - https://www.youtube.com/watch?v=vVw1aPUybB8 #internet #party",
-    timestamp: new Date("2015-03-25")
-  },
-  {
-    id: 3,
-    owner: 2,
-    author: 2,
-    content: "My answer to What are the advantages of using Ember.js? http://qr.ae/qVycR",
-    timestamp: new Date("2014-12-17")
-  }
-];
+Post.reopenClass({
+  FIXTURES: [
+    {
+      id: 1,
+      owner: 1,
+      author: 1,
+      content: "Spot on - https://www.youtube.com/watch?v=vVw1aPUybB8 #internet #party",
+      timestamp: new Date("2015-03-24")
+    },
+    {
+      id: 2,
+      owner: 2,
+      author: 1,
+      content: "Spot on - https://www.youtube.com/watch?v=vVw1aPUybB8 #internet #party",
+      timestamp: new Date("2015-03-25")
+    },
+    {
+      id: 3,
+      owner: 2,
+      author: 2,
+      content: "My answer to What are the advantages of using Ember.js? http://qr.ae/qVycR",
+      timestamp: new Date("2014-12-17")
+    }
+  ]
+});
 
 export default Post;
