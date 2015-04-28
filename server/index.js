@@ -19,4 +19,7 @@ module.exports = function(app) {
   mocks.forEach(function(route) { route(app); });
   proxies.forEach(function(route) { route(app); });
 
+  // Read POST parameters
+  var bodyParser = require('body-parser');
+  app.use(bodyParser.json());
 };
