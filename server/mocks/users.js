@@ -13,10 +13,26 @@ module.exports = function(app) {
   });
 
   usersRouter.get('/:id', function(req, res) {
-    res.send({
-      'users': {
-        id: req.params.id
+    var users = {
+      'davidchchang': {
+        id: "davidchchang",
+        name: "David Chang",
+        email: "david@telegram.com"
+      },
+      'andreisoare': {
+        id: "andreisoare",
+        name: "Andrei Soare",
+        email: "andrei@telegram.com"
+      },
+      'octavdruta': {
+        id: "octavdruta",
+        name: "Octav Druta",
+        email: "octav@telegram.com"
       }
+    };
+
+    res.send({
+      "user": users[req.params.id]
     });
   });
 
