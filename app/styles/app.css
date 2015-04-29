@@ -63,7 +63,7 @@ textarea {
 
 body {
   font: 16px/26px 'Open Sans', Helvetica, Helvetica Neue, Arial;
-  background-color: #008CB8;
+  margin: 0;
 }
 
 .wrapper {
@@ -74,6 +74,14 @@ body {
 /* ===================
     ALL: Telegram Theme
    =================== */
+
+.main-container.account {
+  background-color: #008CB8;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
 
 
 .title {
