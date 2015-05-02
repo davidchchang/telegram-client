@@ -1,25 +1,10 @@
 <div class="main-container account">
-  {{ outlet }}
   <div class="main wrapper clearfix">
     <div class="login-form">
       <div class="panel logo">
       </div>
       <div class="panel">
-        <form>
-          <div class="prompt">
-            Get going ...
-          </div>
-          <div class="clearfix">
-            <input type="text" placeholder="Enter your username ..."/>
-            <input type="password" placeholder="Enter your password ..."/>
-          </div>
-          <div class="login button">
-            <button>Log in</button>
-          </div>
-          <div class="actions">
-            <a href="#">Recover password</a> or <a href="#">Sign up</a>
-          </div>
-        </form>
+        {{ outlet }}
       </div>
     </div>
   </div> <!-- #main -->
