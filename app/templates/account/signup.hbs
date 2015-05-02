@@ -1,1 +1,18 @@
+<form>
+  <div class="prompt">
+    Create your account
+  </div>
+  <div class="clearfix">
+    {{ input type="text" value=name placeholder="Enter your name ..." }}
+    {{ input type="text" value=username placeholder="Enter your username ..." }}
+    {{ input type="text" value=email placeholder="Enter your email ..." }}
+    {{ input type="password" value=password placeholder="Enter your password ..." }}
+  </div>
+  <div class="login button">
+    <button {{action 'submitAction' target="controller"}}>Sign up</button>
+  </div>
+  <div class="actions">
+    <a href="#">Login</a>
+  </div>
+</form>
 {{outlet}}

@@ -114,7 +114,7 @@ body {
   border-right: none;
   width: 37%; /* TODO: fixme */
   display: table-cell;
-  padding: 148px 50px 50px;
+  padding: 100px 50px 50px;
 }
 
 .login-form .panel.logo {
