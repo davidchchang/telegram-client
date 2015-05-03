@@ -2,16 +2,10 @@ import Ember from 'ember';
 import User from '../../models/user.js';
 
 export default Ember.Route.extend({
-  controllerName: 'signup',
-
-  model: function () {
-    return this.store.createRecord('user');
-  },
-
   setupController: function (controller, model) {
+    // TODO: confirm whether this is the right place for redirection logic
     if (controller.get('isLoggedIn')) {
       controller.transitionToRoute('account.home');
     }
-    controller.set("model", model);
   }
 });

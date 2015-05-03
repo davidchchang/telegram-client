@@ -12,7 +12,7 @@
     <button {{action 'signUp' target="controller"}}>Sign up</button>
   </div>
   <div class="actions">
-    <a href="#">Login</a>
+    {{link-to "Login" 'account.login'}}
   </div>
 </form>
 {{outlet}}

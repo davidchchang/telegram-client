@@ -1,1 +1,16 @@
+<form>
+  <div class="prompt">
+    Get going ...
+  </div>
+  <div class="clearfix">
+    {{ input type="text" value=username placeholder="Enter your username ..." }}
+    {{ input type="password" value=password placeholder="Enter your password ..." }}
+  </div>
+  <div class="login button">
+    <button {{action 'login' target="controller"}}>Log in</button>
+  </div>
+  <div class="actions">
+    {{link-to "Recover password" 'account.reset'}} or {{link-to "Sign up" 'account.signup'}}
+  </div>
+</form>
 {{outlet}}

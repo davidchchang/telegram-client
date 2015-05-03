@@ -3,8 +3,9 @@ import AccountController from 'account';
 
 export default AccountController.extend({
   actions: {
-    signUp: function () {
+    login: function () {
       var controller = this;
+
       // Dependency injection provides the store object to the controller instance.
       this.store.find('user').then(function (items) {
         //controller.set('items', items);
@@ -13,7 +14,7 @@ export default AccountController.extend({
       var user = this.store.createRecord('user', {
         id: this.get('username'),
         password: this.get('password'),
-        operation: 'signup'
+        operation: 'login'
       });
 
       user.save().then(function (user) {
