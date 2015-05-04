@@ -90,7 +90,7 @@ body {
 
 .login-form {
   max-width: 800px;
-  min-height: 400px;
+  min-height: 450px;
   margin: 100px auto;
   background: white url('/assets/images/postmark.png') no-repeat 100% 10%;
   font-size: 13px;

@@ -8,6 +8,8 @@ export default AccountController.extend({
 
       var user = this.store.createRecord('user', {
         id: this.get('username'),
+        name: this.get('name'),
+        email: this.get('email'),
         password: this.get('password'),
         operation: 'signup'
       });

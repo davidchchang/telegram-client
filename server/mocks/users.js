@@ -38,15 +38,33 @@ module.exports = function(app) {
       return;
     }
     var userid = req.body.user.id;
-    if (users.indexOf(userid) === -1) {
-      res.status(404).send('User ' + userid + ' not found');
-      return;
+    if (req.body.user.meta.operation === 'login') {
+      if (users.indexOf(userid) === -1) {
+        res.status(404).send('User ' + userid + ' not found');
+        return;
+      }
+      if (req.body.user.meta.password !== password) {
+        res.status(404).send('Invalid password');
+        return;
+      }
+      res.status(200).send({"user": users[userid]});
+    } else {
+      if (users.indexOf(userid) !== -1) {
+        res.status(404).send('User already exists');
+        return;
+      }
+      if (req.body.user.meta.password !== password) {
+        res.status(404).send('Invalid password');
+        return;
+      }
+      users[userid] = {
+        id: req.body.user.id,
+        name: req.body.user.name,
+        email: req.body.user.email
+      };
+      res.status(201).send({"user": users[userid]});
     }
-    if (req.body.user.meta.password !== password) {
-      res.status(404).send('Invalid password');
-      return;
-    }
-    res.status(201).send({"user": users[req.body.user.id]});
+
   });
 
   usersRouter.get('/:id', function(req, res) {

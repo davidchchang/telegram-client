@@ -2,6 +2,11 @@
   <div class="prompt">
     Create your account
   </div>
+  {{#if errorText}}
+    <div class="error">
+      {{ errorText }}
+    </div>
+  {{/if}}
   <div class="clearfix">
     {{ input type="text" value=name placeholder="Enter your name ..." }}
     {{ input type="text" value=username placeholder="Enter your username ..." }}
