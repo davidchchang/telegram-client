@@ -5,10 +5,6 @@ export default AccountController.extend({
   actions: {
     signUp: function () {
       var controller = this;
-      // Dependency injection provides the store object to the controller instance.
-      this.store.find('user').then(function (items) {
-        //controller.set('items', items);
-      });
 
       var user = this.store.createRecord('user', {
         id: this.get('username'),
@@ -21,12 +17,16 @@ export default AccountController.extend({
 
         // There is an alias to the session property, so this change propagates
         // to the session object then the IndexController.
-        this.set('isLoggedIn', true);
+        controller.set('isLoggedIn', true);
 
-        // Redirect to login
-        this.transitionToRoute('account.home');
+        // Redirect to landing page
+        controller.transitionToRoute('account.home');
       }, function (response) {
-        // TODO Handle errors (E.g. if the user already exists)
+        if (response.responseText) {
+          controller.set('errorText', response.responseText);
+        } else {
+          controller.set('errorText', 'Oops... an error occurred');
+        }
       });
     }
   }

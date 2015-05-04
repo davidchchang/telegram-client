@@ -7,11 +7,6 @@ export default AccountController.extend({
     login: function () {
       var controller = this;
 
-      // Dependency injection provides the store object to the controller instance.
-      this.store.find('user').then(function (items) {
-        //controller.set('items', items);
-      });
-
       var user = this.store.createRecord('user', {
         id: this.get('username'),
         password: this.get('password'),
@@ -25,7 +20,7 @@ export default AccountController.extend({
         // to the session object then the IndexController.
         controller.set('isLoggedIn', true);
 
-        // Redirect to login
+        // Redirect to landing page
         controller.transitionToRoute('account.home');
       }, function (response) {
         if (response.responseText) {
