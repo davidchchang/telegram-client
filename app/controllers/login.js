@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import AccountController from 'account';
+import AccountController from './account.js';
 
 export default AccountController.extend({
   actions: {
@@ -28,6 +28,7 @@ export default AccountController.extend({
         this.transitionToRoute('account.home');
       }, function (response) {
         // TODO Handle errors (E.g. if the user already exists)
+        console.dir(response);
       });
     }
   }
