@@ -155,6 +155,13 @@ body {
   float: right;
 }
 
+.login-form .error {
+  border: dashed black 1px;
+  background-color: lightpink;
+  padding: 10px;
+  margin: 10px 0;
+}
+
 ::-webkit-input-placeholder { /* WebKit browsers */
   color:    #000;
 }

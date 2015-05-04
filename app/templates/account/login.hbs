@@ -2,6 +2,11 @@
   <div class="prompt">
     Get going ...
   </div>
+  {{#if errorText}}
+  <div class="error">
+    {{ errorText }}
+  </div>
+  {{/if}}
   <div class="clearfix">
     {{ input type="text" value=username placeholder="Enter your username ..." }}
     {{ input type="password" value=password placeholder="Enter your password ..." }}

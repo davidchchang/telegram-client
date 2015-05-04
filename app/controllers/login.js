@@ -2,6 +2,7 @@ import Ember from 'ember';
 import AccountController from './account.js';
 
 export default AccountController.extend({
+  errorText: '',
   actions: {
     login: function () {
       var controller = this;
@@ -22,13 +23,16 @@ export default AccountController.extend({
 
         // There is an alias to the session property, so this change propagates
         // to the session object then the IndexController.
-        this.set('isLoggedIn', true);
+        controller.set('isLoggedIn', true);
 
         // Redirect to login
-        this.transitionToRoute('account.home');
+        controller.transitionToRoute('account.home');
       }, function (response) {
-        // TODO Handle errors (E.g. if the user already exists)
-        console.dir(response);
+        if (response.responseText) {
+          controller.set('errorText', response.responseText);
+        } else {
+          controller.set('errorText', 'Oops... an error occurred');
+        }
       });
     }
   }
