@@ -2,6 +2,15 @@
 
 module.exports = function(environment) {
   var ENV = {
+    contentSecurityPolicy: {
+      // allow everything but only from the same origin
+      // can change in the future
+      // http://content-security-policy.com/
+      'default-src': "'self'",
+      'script-src': "'self' 'unsafe-inline' www.google-analytics.com ajax.googleapis.com fonts.googleapis.com",
+      'style-src': "'self' www.google-analytics.com ajax.googleapis.com fonts.googleapis.com",
+      'font-src': "'self' fonts.gstatic.com"
+    },
     modulePrefix: 'telegram-client',
     environment: environment,
     baseURL: '/',

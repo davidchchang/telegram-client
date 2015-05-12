@@ -1,1 +1,12 @@
+<form>
+  <div class="prompt">
+    Reset password
+  </div>
+  <div class="clearfix">
+    {{ input type="text" value=email placeholder="Enter your email ..." }}
+  </div>
+  <div class="login button">
+    <button {{action 'resetPassword' target="controller"}}>Reset password</button>
+  </div>
+</form>
 {{outlet}}

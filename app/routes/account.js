@@ -1,0 +1,13 @@
+import Ember from 'ember';
+
+export default Ember.Route.extend({
+  session: Ember.inject.service('session'),
+  beforeModel: function(transition) {
+    if (this.get('session.authenticatedUser') != null) {
+      this.transitionTo('account.home');
+    } else if (transition.targetName === 'account.index') {
+      // not logged in
+      this.transitionTo('account.login');
+    }
+  }
+});

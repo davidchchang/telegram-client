@@ -1,7 +1,20 @@
 import Ember from 'ember';
+import AccountRoute from '../account.js';
 
-export default Ember.Route.extend({
+export default AccountRoute.extend({
+  controllerName: 'account',
   model: function () {
     return this.store.find('post');
+  },
+
+  // override parent beforeModel
+  beforeModel: function(transition) {
+    if (this.get('session.authenticatedUser') == null) {
+      this.transitionTo('account.login');
+    }
+  },
+
+  setupController: function (controller, model) {
+    controller.set('model', model);
   }
 });
