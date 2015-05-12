@@ -18,7 +18,7 @@ export default AccountController.extend({
 
         // There is an alias to the session property, so this change propagates
         // to the session object then the IndexController.
-        controller.set('controllers.session.isAuthenticated', true);
+        controller.set('session.authenticatedUser', user);
 
         // Redirect to landing page
         controller.transitionToRoute('account.home');

@@ -9,7 +9,7 @@ export default AccountRoute.extend({
 
   // override parent beforeModel
   beforeModel: function(transition) {
-    if (!this.controllerFor('session').get('isAuthenticated')) {
+    if (this.get('session.authenticatedUser') == null) {
       this.transitionTo('account.login');
     }
   },
