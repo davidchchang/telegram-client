@@ -2,17 +2,7 @@ module.exports = function(app) {
   var express = require('express');
   var usersRouter = express.Router();
 
-  // Read POST parameters
-  var bodyParser = require('body-parser');
-  app.use(bodyParser.json());
-
-  usersRouter.get('/', function(req, res) {
-    res.send({
-      'users': []
-    });
-  });
-
-  var users = {
+  var userFixtures = {
     'davidchchang': {
       id: "davidchchang",
       name: "David Chang",
@@ -30,39 +20,51 @@ module.exports = function(app) {
     }
   };
 
+  usersRouter.get('/', function(req, res) {
+    res.send({
+      'users': []
+    });
+  });
+
   usersRouter.post('/', function(req, res) {
     var users = ['davidchchang', 'andreisoare', 'octavdruta'];
     var password = '123';
+
     if (!req.body || !req.body.user) {
-      res.status(404).send('Missing request body parameters');
-      return;
+      return res.status(404).send('Missing request body parameters');
     }
+
     var userid = req.body.user.id;
+
     if (req.body.user.meta.operation === 'login') {
       if (users.indexOf(userid) === -1) {
-        res.status(404).send('User ' + userid + ' not found');
-        return;
+        return res.status(404).send('User ' + userid + ' not found');
       }
       if (req.body.user.meta.password !== password) {
-        res.status(404).send('Invalid password');
-        return;
+        return res.status(404).send('Invalid password');
       }
-      res.status(200).send({"user": users[userid]});
-    } else {
+      return res.status(200).send({"user": users[userid]});
+    } else if (req.body.user.meta.operation === 'signup') {
+      var user = {
+        id: req.body.user.id,
+        name: req.body.user.name,
+        email: req.body.user.email,
+      }
+      return res.send({
+        user: user
+      });
+
+      // TODO: finish this, make sure you don't override the global "users" object
+
       if (users.indexOf(userid) !== -1) {
-        res.status(404).send('User already exists');
-        return;
+        return res.status(404).send('User already exists');
       }
-      if (req.body.user.meta.password !== password) {
-        res.status(404).send('Invalid password');
-        return;
-      }
-      users[userid] = {
+      userFixtures[userid] = {
         id: req.body.user.id,
         name: req.body.user.name,
         email: req.body.user.email
       };
-      res.status(201).send({"user": users[userid]});
+      return res.status(201).send({"user": users[userid]});
     }
 
   });

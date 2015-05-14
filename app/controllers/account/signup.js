@@ -1,7 +1,13 @@
 import Ember from 'ember';
-import AccountController from '../account.js';
 
-export default AccountController.extend({
+export default Ember.Controller.extend({
+  session: Ember.inject.service('session'),
+
+  username: '',
+  password: '',
+  name: '',
+  email: '',
+
   actions: {
     signUp: function () {
       var controller = this;
@@ -15,14 +21,8 @@ export default AccountController.extend({
       });
 
       user.save().then(function (user) {
-        // Your user was saved. You can now redirect to the dashboard.
-
-        // There is an alias to the session property, so this change propagates
-        // to the session object then the IndexController.
         controller.set('session.authenticatedUser', user);
-
-        // Redirect to landing page
-        controller.transitionToRoute('account.home');
+        controller.transitionToRoute('dashboard');
       }, function (response) {
         if (response.responseText) {
           controller.set('errorText', response.responseText);

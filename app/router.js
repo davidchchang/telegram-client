@@ -13,9 +13,9 @@ export default Router.map(function() {
     this.route('signup');
     this.route('reset');
     this.route('reset-success');
-    this.route('home');
   });
 
+  this.route('dashboard');
 
   this.route('user', {
     path: ':user_id'

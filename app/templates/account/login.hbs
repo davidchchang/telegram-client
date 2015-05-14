@@ -1,4 +1,4 @@
-<form>
+<form {{action "login" on="submit"}}>
   <div class="prompt">
     Get going ...
   </div>
@@ -12,10 +12,9 @@
     {{ input type="password" value=password placeholder="Enter your password ..." }}
   </div>
   <div class="login button">
-    <button {{action 'login' target="controller"}}>Log in</button>
+    {{ input type="submit" value="Log in" }}
   </div>
   <div class="actions">
     {{link-to "Recover password" 'account.reset'}} or {{link-to "Sign up" 'account.signup'}}
   </div>
 </form>
-{{outlet}}
