@@ -10,22 +10,33 @@ export default Ember.Controller.extend({
 
   actions: {
     login: function () {
-      var controller = this;
+      var controller = this,
+        user = null,
+        userid = this.get('username');
 
-      // workaround for createRecord bug - https://github.com/emberjs/data/issues/2150
-      var unloadUser = this.store.recordForId('user', this.get('username'));
-      this.store.unloadRecord(unloadUser);
+      this.store.find('user', userid).then(function(model) {
+        user = model;
 
-      var user = this.store.createRecord('user', {
-        id: this.get('username'),
-        password: this.get('password'),
-        operation: 'login'
-      });
+        user.setProperties({
+          id: userid,
+          password: controller.get('password'),
+          operation: 'login'
+        });
 
-      user.save().then(function (user) {
-        controller.set('session.authenticatedUser', user);
-        controller.transitionToRoute('dashboard');
-      }, function (response) {
+        // invokes PUT request on server
+        user.save().then(function (user) {
+          controller.set('session.authenticatedUser', user);
+          controller.transitionToRoute('dashboard');
+        }, function (response) {
+          // user exists, but password was incorrect
+          if (response.responseText) {
+            controller.set('errorText', response.responseText);
+          } else {
+            controller.set('errorText', 'Oops... an error occurred');
+          }
+        });
+      }, function(response) {
+        // user doesn't exist yet
         if (response.responseText) {
           controller.set('errorText', response.responseText);
         } else {

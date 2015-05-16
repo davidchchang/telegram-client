@@ -12,10 +12,6 @@ export default Ember.Controller.extend({
     signUp: function () {
       var controller = this;
 
-      // workaround for createRecord bug - https://github.com/emberjs/data/issues/2150
-      var unloadUser = this.store.recordForId('user', this.get('username'));
-      this.store.unloadRecord(unloadUser);
-
       var user = this.store.createRecord('user', {
         id: this.get('username'),
         name: this.get('name'),
