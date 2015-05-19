@@ -12,7 +12,9 @@ export default Ember.Route.extend({
   model: function () {
     var self = this;
     return Ember.RSVP.hash({
-      posts: self.store.find('post'),
+      posts: self.store.find('post').then(function(posts){
+        return posts.sortBy('timestamp').reverse();
+      }),
       user: self.get('session.authenticatedUser')
     });
   }
