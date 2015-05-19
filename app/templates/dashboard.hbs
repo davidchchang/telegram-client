@@ -31,6 +31,24 @@
   <div class="title">Latest posts</div>
 
   <div class="posts-list">
+    {{#each post in model}}
+      <div class="post-block clearfix">
+        <a class="avatar link"><img src="/assets/images/avatar-red.png"/></a>
+
+        <div class="content">
+          <div class="author"><a class="link">{{post.author.name}}</a></div>
+          <div class="text">{{post.content}}</div>
+          <div class="footer">
+            <span class="timestamp">{{ago post.timestamp}}</span>
+            <span class="middot">&middot;</span>
+            <a class="blue-link">Repost</a>
+            <span class="middot">&middot;</span>
+            <a class="blue-link">Delete</a>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+
     <div class="post-block clearfix">
       <a class="avatar link"><img src="/assets/images/avatar-red.png"/></a>
 
