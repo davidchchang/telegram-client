@@ -2,7 +2,7 @@
   <div class="third">
     <div class="home relative-center-y">
       <img class="icon" src="/assets/images/icon-home.png"/>
-      <a class="title dark-gray-link">Home</a>
+      {{link-to "Home" 'dashboard' class='title dark-gray-link'}}
     </div>
   </div>
 
@@ -12,9 +12,9 @@
 
   <div class="third">
     <div class="user relative-center-y">
-      <a class="avatar link"><img src="/assets/images/avatar-turquoise.png"/></a>
-      <a class="name dark-gray-link">Cristian Strat</a>
-      <a class="logout dark-gray-link">Log out</a>
+      <a class="avatar link"><img src="/assets/images/avatars/{{model.user.id}}.png"/></a>
+      <a class="name dark-gray-link">{{model.user.name}}</a>
+      {{link-to "Log out" 'logout' class='logout dark-gray-link'}}
     </div>
   </div>
 </div>
@@ -31,9 +31,9 @@
   <div class="title">Latest posts</div>
 
   <div class="posts-list">
-    {{#each post in model}}
+    {{#each post in model.posts}}
       <div class="post-block clearfix">
-        <a class="avatar link"><img src="/assets/images/avatar-red.png"/></a>
+        <a class="avatar link"><img src="/assets/images/avatars/{{post.author.id}}.png"/></a>
 
         <div class="content">
           <div class="author"><a class="link">{{post.author.name}}</a></div>
