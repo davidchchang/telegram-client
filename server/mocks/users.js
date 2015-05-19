@@ -20,6 +20,30 @@ module.exports = function(app) {
       name: 'Octav Druta',
       email: 'octav@telegram.com',
       password: '123'
+    },
+    'jeresig': {
+      id: 'jeresig',
+      name: 'John Resig',
+      email: 'john@telegram.com',
+      password: '123'
+    },
+    'marissamayer': {
+      id: 'marissamayer',
+      name: 'Marissa Mayer',
+      email: 'marissa@telegram.com',
+      password: '123'
+    },
+    'newsycombinator': {
+      id: 'newsycombinator',
+      name: 'Hacker News',
+      email: 'ycomb@telegram.com',
+      password: '123'
+    },
+    'google': {
+      id: 'google',
+      name: 'Google',
+      email: 'google@telegram.com',
+      password: '123'
     }
   };
 
