@@ -21,10 +21,14 @@
 
 <div class="dashboard">
   <div class="create-post">
-    <textarea placeholder="What's happening?" autofocus="autofocus"></textarea>
+    {{ textarea placeholder="What's happening?" value=newPost autofocus="autofocus" }}
     <div class="footer clearfix">
-      <div class="characters-left">140 characters</div>
-      <div class="publish dark-gray-btn">Publish</div>
+      <div {{bind-attr class=":characters-left canPublish::warning"}}>{{charactersRemainingText}}</div>
+      {{#if canPublish}}
+        <div class="publish dark-gray-btn" {{action 'publish'}}>Publish</div>
+      {{else}}
+        <div class="warning publish dark-gray-btn">Publish</div>
+      {{/if}}
     </div>
   </div>
 
@@ -41,9 +45,9 @@
           <div class="footer">
             <span class="timestamp">{{ago post.timestamp}}</span>
             <span class="middot">&middot;</span>
-            <a class="blue-link">Repost</a>
+            <a class="blue-link" {{action 'repost'}}>Repost</a>
             <span class="middot">&middot;</span>
-            <a class="blue-link">Delete</a>
+            <a class="blue-link" {{action 'deletePost'}}>Delete</a>
           </div>
         </div>
         <!-- TODO: repost logic
@@ -54,7 +58,6 @@
       </div>
     {{/each}}
 
-    <!-- TODO: repost logic
     <div class="post-block clearfix confirm-repost">
       <img class="avatar" src="/assets/images/icon-retweet.png"/>
 
@@ -66,10 +69,7 @@
           <a class="blue-link">No</a>
         </div>
       </div>
-      <div class="repost-header clearfix">
-        <img class="icon" src="/assets/images/icon-retweet.png"/>
-        <div class="author">Reposted by <a class="dark-gray-link">Cristian Strat</a></div>
-      </div>
-    </div> -->
+
+    </div>
   </div>
 </div>

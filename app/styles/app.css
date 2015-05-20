@@ -906,3 +906,10 @@ body {
 .posts-list {
   clear: both;
 }
+.dashboard .create-post .footer .characters-left.warning {
+  color: red;
+}
+.dashboard .create-post .footer .publish.warning {
+  color: lightgray;
+  border: lightgray;
+}
