@@ -97,7 +97,7 @@ module.exports = function(app) {
 
   postsRouter.post('/', function(req, res) {
     if (!req.body || !req.body.post) {
-      return res.status(404).send('Missing request body parameters');
+      return res.status(400).send('Missing request body parameters');
     }
 
     if (req.body.post.meta.operation === 'newPost') {
@@ -145,6 +145,14 @@ module.exports = function(app) {
   });
 
   postsRouter.delete('/:id', function(req, res) {
+    if (!req.params || !req.params.id) {
+      return res.status(400).send('Missing request parameters');
+    }
+
+    var postId = req.params.id;
+    postsFixtures = postsFixtures.filter(function (element, index, array) {
+      return element.id != postId;
+    });
     res.status(204).end();
   });
 

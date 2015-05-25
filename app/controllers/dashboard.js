@@ -52,8 +52,25 @@ export default Ember.Controller.extend({
         }
       });
     },
-    deletePost: function() {
-      alert('deleting');
+    deletePost: function(post) {
+      if (confirm("Delete this post? This action cannot be reversed.")) {
+        // TODO: confirm this is the user's post
+        this.store.find('post', post.get('id')).then(function (post) {
+          post.deleteRecord();
+          post.save() // => DELETE to /posts/id
+            .then(function (post){
+            alert('post deleted');
+          }, function (response) {
+              if (response.responseText) {
+                alert(response.responseText);
+                //controller.set('errorText', response.responseText);
+              } else {
+                alert('Oops');
+                //controller.set('errorText', 'Oops... an error occurred');
+              }
+            });
+        });
+      }
     },
     repost: function() {
       alert('reposting');
