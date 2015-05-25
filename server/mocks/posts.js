@@ -111,7 +111,7 @@ module.exports = function(app) {
 
       postsFixtures.push(post);
 
-      return res.status(201).end();
+      return res.status(201).send({post: post});
     } else if (req.body.post.meta.operation === 'repost') {
       var repost = {
         id: new Date().getTime(),
@@ -123,7 +123,7 @@ module.exports = function(app) {
 
       postsFixtures.push(repost);
 
-      return res.status(201).end();
+      return res.status(201).send({post: repost});
     }
     return res.status(400).send('Unsupported operation: ' + req.body.post.meta.operation);
   });

@@ -3,8 +3,7 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   session: Ember.inject.service('session'),
 
-  content: null,
-  user: null,
+  model: null, // model is a RSVP hash { posts; user }
 
   newPost: '',
 
@@ -23,19 +22,26 @@ export default Ember.Controller.extend({
 
   actions: {
     publish: function() {
+      var controller = this;
+
       if (this.get('charactersRemaining') === 140) {
         alert('Content cannot be blank');
         return;
       }
 
       var post = this.store.createRecord('post', {
-        author: this.get('user'),
+        author: this.get('model.user'),
         content: this.get('newPost'),
         operation: 'newPost'
       });
 
       post.save().then(function (post) {
         alert('post saved');
+
+        // TODO: figure out why model (RSVP hash) is not updated?
+
+        // clear post contents
+        controller.set('newPost', '');
       }, function (response) {
         if (response.responseText) {
           alert(response.responseText);

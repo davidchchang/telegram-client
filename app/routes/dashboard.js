@@ -17,11 +17,5 @@ export default Ember.Route.extend({
       }),
       user: self.get('session.authenticatedUser')
     });
-  },
-
-  setupController: function(controller, hash) {
-    controller.set('model', hash);
-    controller.set('content', hash.posts);
-    controller.set('user', hash.user);
   }
 });
