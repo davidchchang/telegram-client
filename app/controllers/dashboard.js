@@ -72,8 +72,33 @@ export default Ember.Controller.extend({
         });
       }
     },
-    repost: function() {
-      alert('reposting');
+    repost: function(post) {
+      if (confirm("Repost this to your followers?")) {
+        // TODO: confirm this is not the user's post - can a user repost their own post?
+        // TODO: display repost dialog using HTML
+
+        var newPost = this.store.createRecord('post', {
+          author: this.get('model.user'),
+          content: post.get('content'),
+          originalPost: post,
+          operation: 'repost'
+        });
+
+        newPost.save().then(function (post) {
+          alert('post reposted');
+
+          // TODO: figure out why model (RSVP hash) is not updated?
+          // TODO: hide HTML dialog
+        }, function (response) {
+          if (response.responseText) {
+            alert(response.responseText);
+            //controller.set('errorText', response.responseText);
+          } else {
+            alert('Oops');
+            //controller.set('errorText', 'Oops... an error occurred');
+          }
+        });
+      }
     }
   }
 });

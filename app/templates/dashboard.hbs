@@ -35,29 +35,49 @@
   <div class="title">Latest posts</div>
 
   <div class="posts-list">
+    <!-- TODO: extract into Handlebars helper & template -->
     {{#each post in model.posts}}
-      <div class="post-block clearfix">
-        <a class="avatar link"><img src="/assets/images/avatars/{{post.author.id}}.png"/></a>
+      {{#if post.originalPost}}
+        <div class="post-block clearfix">
+          <div class="repost-header clearfix">
+            <img class="icon" src="/assets/images/icon-retweet.png"/>
 
-        <div class="content">
-          <div class="author"><a class="link">{{post.author.name}}</a></div>
-          <div class="text">{{post.content}}</div>
-          <div class="footer">
-            <span class="timestamp">{{ago post.timestamp}}</span>
-            <span class="middot">&middot;</span>
-            <a class="blue-link" {{action 'repost'}}>Repost</a>
-            <span class="middot">&middot;</span>
-            <a class="blue-link" {{action 'deletePost' post}}>Delete</a>
+            <div class="author">Reposted by <a class="dark-gray-link">{{post.author.id}}</a></div>
+          </div>
+
+          <a class="avatar link"><img src="/assets/images/avatars/{{post.originalPost.author.id}}.png"/></a>
+
+          <div class="content">
+            <div class="author"><a class="link">{{post.originalPost.author.name}}</a></div>
+            <div class="text">{{post.originalPost.content}}</div>
+            <div class="footer">
+              <span class="timestamp">{{ago post.originalPost.timestamp}}</span>
+              <span class="middot">&middot;</span>
+              <a class="blue-link" {{action 'repost' post}}>Repost</a>
+              <span class="middot">&middot;</span>
+              <a class="blue-link" {{action 'deletePost' post}}>Delete</a>
+            </div>
           </div>
         </div>
-        <!-- TODO: repost logic
-        <div class="repost-header clearfix">
-          <img class="icon" src="/assets/images/icon-retweet.png"/>
-          <div class="author">Reposted by <a class="dark-gray-link">Cristian Strat</a></div>
-        </div> -->
-      </div>
-    {{/each}}
+      {{else}}
+        <div class="post-block clearfix">
+          <a class="avatar link"><img src="/assets/images/avatars/{{post.author.id}}.png"/></a>
 
+          <div class="content">
+            <div class="author"><a class="link">{{post.author.name}}</a></div>
+            <div class="text">{{post.content}}</div>
+            <div class="footer">
+              <span class="timestamp">{{ago post.timestamp}}</span>
+              <span class="middot">&middot;</span>
+              <a class="blue-link" {{action 'repost' post}}>Repost</a>
+              <span class="middot">&middot;</span>
+              <a class="blue-link" {{action 'deletePost' post}}>Delete</a>
+            </div>
+          </div>
+        </div>
+      {{/if}}
+    {{/each}}
+<!--
     <div class="post-block clearfix confirm-repost">
       <img class="avatar" src="/assets/images/icon-retweet.png"/>
 
@@ -71,5 +91,7 @@
       </div>
 
     </div>
+
+    -->
   </div>
 </div>
