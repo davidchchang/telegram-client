@@ -2,10 +2,11 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   session: Ember.inject.service('session'),
-
-  model: null, // model is a RSVP hash { posts; user }
-
   newPost: '',
+
+  sortedPosts: function() {
+    return this.get('model').sortBy('timestamp').reverseObjects();
+  }.property('model.@each.timestamp')
 
   charactersRemaining: function () {
     return 140 - this.get('newPost').length;
@@ -20,8 +21,22 @@ export default Ember.Controller.extend({
     return this.get('charactersRemaining') >= 0;
   }.property('charactersRemaining'),
 
+  errorHandler: function(response) {
+    if (response.responseText) {
+      alert(response.responseText);
+      //this.set('errorText', response.responseText);
+    } else {
+      alert('Oops');
+      //this.set('errorText', 'Oops... an error occurred');
+    }
+  },
+
   actions: {
     publish: function() {
+      if (!this.get('canPublish')) {
+        return;
+      }
+
       var controller = this;
 
       if (this.get('charactersRemaining') === 140) {
@@ -30,55 +45,34 @@ export default Ember.Controller.extend({
       }
 
       var post = this.store.createRecord('post', {
-        author: this.get('model.user'),
+        author: this.get('session.authenticatedUser'),
         content: this.get('newPost'),
         operation: 'newPost'
       });
 
-      post.save().then(function (post) {
-        alert('post saved');
-
-        // TODO: figure out why model (RSVP hash) is not updated?
-
-        // clear post contents
+      post.save().then(function(post) {
         controller.set('newPost', '');
-      }, function (response) {
-        if (response.responseText) {
-          alert(response.responseText);
-          //controller.set('errorText', response.responseText);
-        } else {
-          alert('Oops');
-          //controller.set('errorText', 'Oops... an error occurred');
-        }
-      });
+        controller.get('model').addObject(post);
+      }, controller.errorHandler.bind(controller));
     },
+
     deletePost: function(post) {
       if (confirm("Delete this post? This action cannot be reversed.")) {
-        // TODO: confirm this is the user's post
-        this.store.find('post', post.get('id')).then(function (post) {
-          post.deleteRecord();
-          post.save() // => DELETE to /posts/id
-            .then(function (post){
+        post.deleteRecord();
+        post.save() // => DELETE to /posts/id
+          .then(function (post) {
             alert('post deleted');
-          }, function (response) {
-              if (response.responseText) {
-                alert(response.responseText);
-                //controller.set('errorText', response.responseText);
-              } else {
-                alert('Oops');
-                //controller.set('errorText', 'Oops... an error occurred');
-              }
-            });
-        });
+          }, controller.errorHandler.bind(controller));
       }
     },
+
     repost: function(post) {
       if (confirm("Repost this to your followers?")) {
         // TODO: confirm this is not the user's post - can a user repost their own post?
         // TODO: display repost dialog using HTML
 
         var newPost = this.store.createRecord('post', {
-          author: this.get('model.user'),
+          author: this.get('session.authenticatedUser'),
           content: post.get('content'),
           originalPost: post,
           operation: 'repost'
@@ -86,18 +80,8 @@ export default Ember.Controller.extend({
 
         newPost.save().then(function (post) {
           alert('post reposted');
-
-          // TODO: figure out why model (RSVP hash) is not updated?
-          // TODO: hide HTML dialog
-        }, function (response) {
-          if (response.responseText) {
-            alert(response.responseText);
-            //controller.set('errorText', response.responseText);
-          } else {
-            alert('Oops');
-            //controller.set('errorText', 'Oops... an error occurred');
-          }
-        });
+          controller.get('model').addObject(post);
+        }, controller.errorHandler.bind(controller));
       }
     }
   }

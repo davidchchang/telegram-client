@@ -23,12 +23,10 @@
   <div class="create-post">
     {{ textarea placeholder="What's happening?" value=newPost autofocus="autofocus" }}
     <div class="footer clearfix">
-      <div {{bind-attr class=":characters-left canPublish::warning"}}>{{charactersRemainingText}}</div>
-      {{#if canPublish}}
-        <div class="publish dark-gray-btn" {{action 'publish'}}>Publish</div>
-      {{else}}
-        <div class="warning publish dark-gray-btn">Publish</div>
-      {{/if}}
+      <div class="characters-left {{#unless canPublish}} warning {{/unless}}">
+        {{charactersRemainingText}}
+      </div>
+      <div class="publish dark-gray-btn {{#unless canPublish}} warning {{/unless}}" {{action 'publish'}}>Publish</div>
     </div>
   </div>
 
@@ -36,7 +34,7 @@
 
   <div class="posts-list">
     <!-- TODO: extract into Handlebars helper & template -->
-    {{#each post in model.posts}}
+    {{#each post in sortedPosts}}
       {{#if post.originalPost}}
         <div class="post-block clearfix">
           <div class="repost-header clearfix">
@@ -53,9 +51,9 @@
             <div class="footer">
               <span class="timestamp">{{ago post.originalPost.timestamp}}</span>
               <span class="middot">&middot;</span>
-              <a class="blue-link" {{action 'repost' post}}>Repost</a>
+              {{#unless belongsToAuthenticatedUser}}<a class="blue-link" {{action 'repost' post}}>Repost</a>{{/unless}}
               <span class="middot">&middot;</span>
-              <a class="blue-link" {{action 'deletePost' post}}>Delete</a>
+              {{#if belongsToAuthenticatedUser}}<a class="blue-link" {{action 'deletePost' post}}>Delete</a>{{/if}}
             </div>
           </div>
         </div>
