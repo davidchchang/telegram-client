@@ -6,7 +6,7 @@ export default Ember.Controller.extend({
 
   sortedPosts: function() {
     return this.get('model').sortBy('timestamp').reverseObjects();
-  }.property('model.@each.timestamp')
+  }.property('model.@each.timestamp'),
 
   charactersRemaining: function () {
     return 140 - this.get('newPost').length;

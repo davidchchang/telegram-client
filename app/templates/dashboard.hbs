@@ -23,10 +23,10 @@
   <div class="create-post">
     {{ textarea placeholder="What's happening?" value=newPost autofocus="autofocus" }}
     <div class="footer clearfix">
-      <div class="characters-left {{#unless canPublish}} warning {{/unless}}">
+      <div {{bind-attr class=":characters-left canPublish::warning"}}>
         {{charactersRemainingText}}
       </div>
-      <div class="publish dark-gray-btn {{#unless canPublish}} warning {{/unless}}" {{action 'publish'}}>Publish</div>
+      <div {{bind-attr class=":publish :dark-gray-btn canPublish::warning"}} {{action 'publish'}}>Publish</div>
     </div>
   </div>
 
