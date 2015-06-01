@@ -11,32 +11,28 @@ export default Ember.Controller.extend({
   actions: {
     login: function () {
       var controller = this,
-        user = null,
         userid = this.get('username');
 
-      this.store.find('user', userid).then(function(model) {
-        user = model;
+      var user = this.store.getById('user', userid);
 
-        user.setProperties({
-          id: userid,
-          password: controller.get('password'),
-          operation: 'login'
-        });
+      var fieldsHash = {
+        id: userid,
+        password: this.get('password'),
+        operation: 'login'
+      };
 
-        // invokes PUT request on server
-        user.save().then(function (user) {
-          controller.set('session.authenticatedUser', user);
-          controller.transitionToRoute('dashboard');
-        }, function (response) {
-          // user exists, but password was incorrect
-          if (response.responseText) {
-            controller.set('errorText', response.responseText);
-          } else {
-            controller.set('errorText', 'Oops... an error occurred');
-          }
-        });
-      }, function(response) {
-        // user doesn't exist yet
+      if (!user) {
+        user = this.store.createRecord('user', fieldsHash);
+      } else {
+        user.setProperties(fieldsHash);
+      }
+
+      // invokes PUT request on server if exists, otherwise POST
+      user.save().then(function (user) {
+        controller.set('session.authenticatedUser', user);
+        controller.transitionToRoute('dashboard');
+      }, function (response) {
+        // user exists, but password was incorrect
         if (response.responseText) {
           controller.set('errorText', response.responseText);
         } else {

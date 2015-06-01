@@ -66,7 +66,16 @@ module.exports = function(app) {
       return res.status(404).send('User ID cannot be blank');
     }
 
-    if (req.body.user.meta.operation === 'signup') {
+    if (req.body.user.meta.operation === 'login') {
+      if (userIds.indexOf(userid) === -1) {
+        return res.status(404).send('User ' + userid + ' not found');
+      }
+      if (req.body.user.meta.password !== userFixtures[userid].password) {
+        return res.status(404).send('Invalid password');
+      }
+      return res.status(200).send({user: userIds[userid]});
+    }
+    else if (req.body.user.meta.operation === 'signup') {
       if (userIds.indexOf(userid) !== -1) {
         return res.status(404).send('User already exists');
       }
