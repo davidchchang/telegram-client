@@ -63,7 +63,7 @@ export default Ember.Controller.extend({
         post.deleteRecord();
         post.save() // => DELETE to /posts/id
           .then(function (post) {
-            alert('post deleted');
+            controller.get('model').removeObject(post);
           }, controller.errorHandler.bind(controller));
       }
     },
@@ -81,7 +81,6 @@ export default Ember.Controller.extend({
         });
 
         newPost.save().then(function (post) {
-          alert('post reposted');
           controller.get('model').addObject(post);
         }, controller.errorHandler.bind(controller));
       }
