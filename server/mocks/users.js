@@ -48,8 +48,13 @@ module.exports = function(app) {
   };
 
   usersRouter.get('/', function(req, res) {
-    res.send({
-      'users': []
+    if (req.query.isAuthenticated) {
+      return res.status(200).send({
+        'users': [userFixtures['davidchchang']]
+      });
+    }
+    return res.status(200).send({
+      'users': userFixtures
     });
   });
 
