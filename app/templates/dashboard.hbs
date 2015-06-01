@@ -12,8 +12,8 @@
 
   <div class="third">
     <div class="user relative-center-y">
-      <a class="avatar link"><img src="/assets/images/avatars/{{model.user.id}}.png"/></a>
-      <a class="name dark-gray-link">{{model.user.name}}</a>
+      <a class="avatar link"><img src="/assets/images/avatars/{{session.authenticatedUser.id}}.png"/></a>
+      <a class="name dark-gray-link">{{session.authenticatedUser.name}}</a>
       {{link-to "Log out" 'logout' class='logout dark-gray-link'}}
     </div>
   </div>
@@ -33,47 +33,8 @@
   <div class="title">Latest posts</div>
 
   <div class="posts-list">
-    <!-- TODO: extract into Handlebars helper & template -->
     {{#each post in sortedPosts}}
-      {{#if post.originalPost}}
-        <div class="post-block clearfix">
-          <div class="repost-header clearfix">
-            <img class="icon" src="/assets/images/icon-retweet.png"/>
-
-            <div class="author">Reposted by <a class="dark-gray-link">{{post.author.id}}</a></div>
-          </div>
-
-          <a class="avatar link"><img src="/assets/images/avatars/{{post.originalPost.author.id}}.png"/></a>
-
-          <div class="content">
-            <div class="author"><a class="link">{{post.originalPost.author.name}}</a></div>
-            <div class="text">{{post.originalPost.content}}</div>
-            <div class="footer">
-              <span class="timestamp">{{ago post.originalPost.timestamp}}</span>
-              <span class="middot">&middot;</span>
-              {{#unless belongsToAuthenticatedUser}}<a class="blue-link" {{action 'repost' post}}>Repost</a>{{/unless}}
-              <span class="middot">&middot;</span>
-              {{#if belongsToAuthenticatedUser}}<a class="blue-link" {{action 'deletePost' post}}>Delete</a>{{/if}}
-            </div>
-          </div>
-        </div>
-      {{else}}
-        <div class="post-block clearfix">
-          <a class="avatar link"><img src="/assets/images/avatars/{{post.author.id}}.png"/></a>
-
-          <div class="content">
-            <div class="author"><a class="link">{{post.author.name}}</a></div>
-            <div class="text">{{post.content}}</div>
-            <div class="footer">
-              <span class="timestamp">{{ago post.timestamp}}</span>
-              <span class="middot">&middot;</span>
-              <a class="blue-link" {{action 'repost' post}}>Repost</a>
-              <span class="middot">&middot;</span>
-              <a class="blue-link" {{action 'deletePost' post}}>Delete</a>
-            </div>
-          </div>
-        </div>
-      {{/if}}
+      {{post-block post=post session=session repost="repost" deletePost="deletePost"}}
     {{/each}}
 <!--
     <div class="post-block clearfix confirm-repost">
