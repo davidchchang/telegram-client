@@ -57,6 +57,8 @@ export default Ember.Controller.extend({
     },
 
     deletePost: function(post) {
+      var controller = this;
+
       if (confirm("Delete this post? This action cannot be reversed.")) {
         post.deleteRecord();
         post.save() // => DELETE to /posts/id
@@ -68,7 +70,7 @@ export default Ember.Controller.extend({
 
     repost: function(post) {
       if (confirm("Repost this to your followers?")) {
-        // TODO: confirm this is not the user's post - can a user repost their own post?
+        var controller = this;
         // TODO: display repost dialog using HTML
 
         var newPost = this.store.createRecord('post', {
@@ -83,6 +85,11 @@ export default Ember.Controller.extend({
           controller.get('model').addObject(post);
         }, controller.errorHandler.bind(controller));
       }
+    },
+
+    // generic error handler
+    error: function(reason) {
+      alert(reason);
     }
   }
 });
