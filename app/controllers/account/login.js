@@ -30,6 +30,9 @@ export default Ember.Controller.extend({
       // invokes PUT request on server if exists, otherwise POST
       user.save().then(function (user) {
         controller.set('session.authenticatedUser', user);
+        // clear values on submission
+        controller.set('username', '');
+        controller.set('password', '');
         controller.transitionToRoute('dashboard');
       }, function (response) {
         // user exists, but password was incorrect

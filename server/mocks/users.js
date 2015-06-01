@@ -73,7 +73,7 @@ module.exports = function(app) {
       if (req.body.user.meta.password !== userFixtures[userid].password) {
         return res.status(404).send('Invalid password');
       }
-      return res.status(200).send({user: userIds[userid]});
+      return res.status(200).send({user: userFixtures[userid]});
     }
     else if (req.body.user.meta.operation === 'signup') {
       if (userIds.indexOf(userid) !== -1) {
@@ -138,7 +138,7 @@ module.exports = function(app) {
       if (req.body.user.meta.password !== userFixtures[userid].password) {
         return res.status(404).send('Invalid password');
       }
-      return res.status(200).send({user: userIds[userid]});
+      return res.status(200).send({user: userFixtures[userid]});
     }
 
     return res.status(400).send('Unsupported operation: ' + req.body.user.meta.operation);
