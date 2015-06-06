@@ -35,7 +35,7 @@
         <span class="timestamp">{{ago post.timestamp}}</span>
         {{#unless belongsToAuthenticatedUser}}
           <span class="middot">&middot;</span>
-          <a class="blue-link" {{action 'repost' post=post}}>Repost</a>
+          <a class="blue-link" {{action 'repostConfirm' post=post}}>Repost</a>
         {{/unless}}
         {{#if belongsToAuthenticatedUser}}
           <span class="middot">&middot;</span>
@@ -44,4 +44,19 @@
       </div>
     </div>
   </div>
+{{/if}}
+{{#if repostPromptVisible}}
+<div class="post-block clearfix confirm-repost">
+  <img class="avatar" src="/assets/images/icon-retweet.png"/>
+
+  <div class="content">
+    <div class="question">Repost this to your followers?</div>
+    <div class="footer">
+      <a class="blue-link" {{action 'repost' post=post}}>Yes</a>
+      <span class="middot">&middot;</span>
+      <a class="blue-link" {{action 'repostDecline' post=post}}>No</a>
+    </div>
+  </div>
+
+</div>
 {{/if}}

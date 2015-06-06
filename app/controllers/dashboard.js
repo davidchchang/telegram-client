@@ -68,22 +68,19 @@ export default Ember.Controller.extend({
       }
     },
 
-    repost: function(post) {
-      if (confirm("Repost this to your followers?")) {
-        var controller = this;
-        // TODO: display repost dialog using HTML
+    repost: function (post) {
+      var controller = this;
 
-        var newPost = this.store.createRecord('post', {
-          author: this.get('session.authenticatedUser'),
-          postContent: post.get('postContent'),
-          originalPost: post,
-          operation: 'repost'
-        });
+      var newPost = this.store.createRecord('post', {
+        author: this.get('session.authenticatedUser'),
+        postContent: post.get('postContent'),
+        originalPost: post,
+        operation: 'repost'
+      });
 
-        newPost.save().then(function (post) {
-          controller.get('model').addObject(post);
-        }, controller.errorHandler.bind(controller));
-      }
+      newPost.save().then(function (post) {
+        controller.get('model').addObject(post);
+      }, controller.errorHandler.bind(controller));
     },
 
     // generic error handler
