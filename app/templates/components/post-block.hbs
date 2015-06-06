@@ -1,0 +1,47 @@
+{{#if post.originalPost}}
+  <div class="post-block clearfix">
+    <div class="repost-header clearfix">
+      <img class="icon" src="/assets/images/icon-retweet.png"/>
+
+      <div class="author">Reposted by <a class="dark-gray-link">{{post.author.id}}</a></div>
+    </div>
+
+    <a class="avatar link"><img src="/assets/images/avatars/{{post.originalPost.author.id}}.png"/></a>
+
+    <div class="content">
+      <div class="author"><a class="link">{{post.originalPost.author.name}}</a></div>
+      <div class="text">{{post.originalPost.content}}</div>
+      <div class="footer">
+        <span class="timestamp">{{ago post.originalPost.timestamp}}</span>
+        {{#unless belongsToAuthenticatedUser}}
+          <span class="middot">&middot;</span>
+          <a class="blue-link" {{action 'repost' post=post}}>Repost</a>
+        {{/unless}}
+        {{#if belongsToAuthenticatedUser}}
+          <span class="middot">&middot;</span>
+          <a class="blue-link" {{action 'deletePost' post=post}}>Delete</a>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+{{else}}
+  <div class="post-block clearfix">
+    <a class="avatar link"><img src="/assets/images/avatars/{{post.author.id}}.png"/></a>
+
+    <div class="content">
+      <div class="author"><a class="link">{{post.author.name}}</a></div>
+      <div class="text">{{post.content}}</div>
+      <div class="footer">
+        <span class="timestamp">{{ago post.timestamp}}</span>
+        {{#unless belongsToAuthenticatedUser}}
+          <span class="middot">&middot;</span>
+          <a class="blue-link" {{action 'repost' post=post}}>Repost</a>
+        {{/unless}}
+        {{#if belongsToAuthenticatedUser}}
+          <span class="middot">&middot;</span>
+          <a class="blue-link" {{action 'deletePost' post=post}}>Delete</a>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+{{/if}}

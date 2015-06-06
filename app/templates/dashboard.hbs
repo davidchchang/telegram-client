@@ -1,3 +1,56 @@
-{{#each post in model}}
-  {{post.author.name}}: {{post.content}} <br/>
-{{/each}}
+<div class="nav-bar clearfix">
+  <div class="third">
+    <div class="home relative-center-y">
+      <img class="icon" src="/assets/images/icon-home.png"/>
+      {{link-to "Home" 'dashboard' class='title dark-gray-link'}}
+    </div>
+  </div>
+
+  <div class="third">
+    <img class="relative-center-xy" src="/assets/images/telegram-logo-small.png"/>
+  </div>
+
+  <div class="third">
+    <div class="user relative-center-y">
+      <a class="avatar link"><img src="/assets/images/avatars/{{session.authenticatedUser.id}}.png"/></a>
+      <a class="name dark-gray-link">{{session.authenticatedUser.name}}</a>
+      {{link-to "Log out" 'logout' class='logout dark-gray-link'}}
+    </div>
+  </div>
+</div>
+
+<div class="dashboard">
+  <div class="create-post">
+    {{ textarea placeholder="What's happening?" value=newPost autofocus="autofocus" }}
+    <div class="footer clearfix">
+      <div {{bind-attr class=":characters-left canPublish::warning"}}>
+        {{charactersRemainingText}}
+      </div>
+      <div {{bind-attr class=":publish :dark-gray-btn canPublish::warning"}} {{action 'publish'}}>Publish</div>
+    </div>
+  </div>
+
+  <div class="title">Latest posts</div>
+
+  <div class="posts-list">
+    {{#each post in sortedPosts}}
+      {{post-block post=post session=session repost="repost" deletePost="deletePost"}}
+    {{/each}}
+<!--
+    <div class="post-block clearfix confirm-repost">
+      <img class="avatar" src="/assets/images/icon-retweet.png"/>
+
+      <div class="content">
+        <div class="question">Repost this to your followers?</div>
+        <div class="footer">
+          <a class="blue-link">Yes</a>
+          <span class="middot">&middot;</span>
+          <a class="blue-link">No</a>
+        </div>
+      </div>
+
+    </div>
+
+    -->
+  </div>
+</div>

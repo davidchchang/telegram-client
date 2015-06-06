@@ -16,6 +16,7 @@ export default Router.map(function() {
   });
 
   this.route('dashboard');
+  this.route('logout');
 
   this.route('user', {
     path: ':user_id'
