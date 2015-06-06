@@ -10,7 +10,7 @@
 
     <div class="content">
       <div class="author"><a class="link">{{post.originalPost.author.name}}</a></div>
-      <div class="text">{{post.originalPost.content}}</div>
+      <div class="text">{{post.originalPost.postContent}}</div>
       <div class="footer">
         <span class="timestamp">{{ago post.originalPost.timestamp}}</span>
         {{#unless belongsToAuthenticatedUser}}
@@ -30,7 +30,7 @@
 
     <div class="content">
       <div class="author"><a class="link">{{post.author.name}}</a></div>
-      <div class="text">{{post.content}}</div>
+      <div class="text">{{post.postContent}}</div>
       <div class="footer">
         <span class="timestamp">{{ago post.timestamp}}</span>
         {{#unless belongsToAuthenticatedUser}}

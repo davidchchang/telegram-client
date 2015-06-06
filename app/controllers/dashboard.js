@@ -46,7 +46,7 @@ export default Ember.Controller.extend({
 
       var post = this.store.createRecord('post', {
         author: this.get('session.authenticatedUser'),
-        content: this.get('newPost'),
+        postContent: this.get('newPost'),
         operation: 'newPost'
       });
 
@@ -75,7 +75,7 @@ export default Ember.Controller.extend({
 
         var newPost = this.store.createRecord('post', {
           author: this.get('session.authenticatedUser'),
-          content: post.get('content'),
+          postContent: post.get('postContent'),
           originalPost: post,
           operation: 'repost'
         });

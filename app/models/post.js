@@ -6,10 +6,10 @@ var Post = DS.Model.extend({
   }),
   // originalPost will be set if this is a re-post
   originalPost: DS.belongsTo('post', {
-    async: false,
+    async: true,
     inverse: null // one-way relationship to prevent original post from being updated
   }),
-  content: DS.attr('string'),
+  postContent: DS.attr('string'),
   timestamp: DS.attr('date')
 });
 
