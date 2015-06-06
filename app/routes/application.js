@@ -5,7 +5,7 @@ export default Ember.Route.extend({
 
   beforeModel: function() {
     var route = this;
-    this.store.find('user', {isAuthenticated: true}).then(function(users) {
+    return this.store.find('user', {isAuthenticated: true}).then(function(users) {
       var user = (users || []).get('firstObject') || null;
       route.set('session.authenticatedUser', user);
     });
