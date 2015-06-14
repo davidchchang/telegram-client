@@ -913,3 +913,7 @@ body {
   color: lightgray;
   border: lightgray;
 }
+
+.content .author .link {
+  color: #222;
+}

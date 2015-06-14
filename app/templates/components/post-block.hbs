@@ -3,13 +3,13 @@
     <div class="repost-header clearfix">
       <img class="icon" src="/assets/images/icon-retweet.png"/>
 
-      <div class="author">Reposted by <a class="dark-gray-link">{{post.author.id}}</a></div>
+  <div class="author">Reposted by {{#link-to 'user' post.author class="dark-gray-link"}}{{post.author.id}}{{/link-to}}</div>
     </div>
 
-    <a class="avatar link"><img src="/assets/images/avatars/{{post.originalPost.author.id}}.png"/></a>
+    {{#link-to 'user' post.originalPost.author class="avatar link"}}<img src="/assets/images/avatars/{{post.originalPost.author.id}}.png"/>{{/link-to}}
 
     <div class="content">
-      <div class="author"><a class="link">{{post.originalPost.author.name}}</a></div>
+      <div class="author">{{#link-to 'user' post.originalPost.author class="link"}}{{post.originalPost.author.name}}{{/link-to}}</div>
       <div class="text">{{post.originalPost.postContent}}</div>
       <div class="footer">
         <span class="timestamp">{{ago post.originalPost.timestamp}}</span>
@@ -26,10 +26,10 @@
   </div>
 {{else}}
   <div class="post-block clearfix">
-    <a class="avatar link"><img src="/assets/images/avatars/{{post.author.id}}.png"/></a>
+    {{#link-to 'user' post.author class="avatar link"}}<img src="/assets/images/avatars/{{post.author.id}}.png"/>{{/link-to}}
 
     <div class="content">
-      <div class="author"><a class="link">{{post.author.name}}</a></div>
+      <div class="author">{{#link-to 'user' post.author class="link"}}{{post.author.name}}{{/link-to}}</div>
       <div class="text">{{post.postContent}}</div>
       <div class="footer">
         <span class="timestamp">{{ago post.timestamp}}</span>
