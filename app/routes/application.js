@@ -9,5 +9,11 @@ export default Ember.Route.extend({
       var user = (users || []).get('firstObject') || null;
       route.set('session.authenticatedUser', user);
     });
+  },
+
+  actions: {
+    error: function() {
+      this.transitionTo('catchall', 'application-error');
+    }
   }
 });

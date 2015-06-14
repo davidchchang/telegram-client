@@ -917,3 +917,17 @@ body {
 .content .author .link {
   color: #222;
 }
+
+.error-page {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  margin: 0 auto;
+  top: 0;
+  bottom: 0;
+}
+
+.error-page .container {
+  margin: auto;
+  text-align: center;
+}

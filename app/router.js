@@ -25,4 +25,6 @@ export default Router.map(function() {
     this.route('followers');
     this.route('following');
   });
+
+  this.route('catchall', {path: '/*wildcard'});
 });
