@@ -21,21 +21,19 @@
 </div>
 
 <div class="dashboard">
-  <div class="create-post">
-    {{ textarea placeholder="What's happening?" value=newPost autofocus="autofocus" }}
-    <div class="footer clearfix">
-      <div {{bind-attr class=":characters-left canPublish::warning"}}>
-        {{charactersRemainingText}}
-      </div>
-      <div {{bind-attr class=":publish :dark-gray-btn canPublish::warning"}} {{action 'publish'}}>Publish</div>
+  <div class="user-profile">
+    <a class="avatar link"><img src="/assets/images/avatars/{{session.authenticatedUser.id}}.png"/></a>
+    <a class="name dark-gray-link">{{session.authenticatedUser.name}}</a>
+    <div class="dark-gray-btn" {{action 'publish'}}>
+      Follow
     </div>
   </div>
 
-  <div class="title">Latest posts</div>
-
-  <div class="posts-list">
-    {{#each post in sortedPosts}}
-      {{post-block post=post session=session repost="repost" deletePost="deletePost"}}
-    {{/each}}
+  <div class="profile-nav">
+    {{#link-to 'user.posts'}}Posts{{/link-to}}
+    {{#link-to 'user.following'}}Following{{/link-to}}
+    {{#link-to 'user.followers'}}Followers{{/link-to}}
   </div>
+
+  {{outlet}}
 </div>

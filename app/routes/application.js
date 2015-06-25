@@ -12,7 +12,8 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    error: function() {
+    error: function(err) {
+      console.log(err);
       this.transitionTo('catchall', 'application-error');
     }
   }

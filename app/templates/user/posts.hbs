@@ -1,1 +1,6 @@
+<div class="posts-list">
+  {{#each post in sortedPosts}}
+    {{post-block post=post session=session repost="repost" deletePost="deletePost"}}
+  {{/each}}
+</div>
 {{outlet}}

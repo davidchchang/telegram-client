@@ -90,7 +90,14 @@ module.exports = function(app) {
   ];
 
   postsRouter.get('/', function(req, res) {
-    res.send({
+    if (req.query && req.query.userid) {
+      return res.send({
+        "posts": postsFixtures.filter(function(post) {
+          return post.author === req.query.userid;
+        })
+      });
+    }
+    return res.send({
       "posts": postsFixtures
     });
   });
