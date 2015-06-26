@@ -1,1 +1,5 @@
-{{outlet}}
+<div class="posts-list">
+  {{#each user in sortedUsers}}
+    {{user-block user=user session=session follow="follow"}}
+  {{/each}}
+</div>

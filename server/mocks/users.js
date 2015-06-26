@@ -47,14 +47,40 @@ module.exports = function(app) {
     }
   };
 
+  var followsMapping = {
+    'davidchchang': ['andreisoare', 'jeresig', 'newsycombinator'],
+    'andreisoare': ['davidchchang', 'octavdruta', 'google'],
+    'octavdruta': ['andreisoare', 'google'],
+    'marissamayer': ['google']
+  };
+
+  var augmentSingleUserWithFollows = function(user, relativeToUserId) {
+    user.followedByCurrentUser = followsMapping[relativeToUserId].indexOf(user.id) >= 0;
+    return user;
+  };
+
+  var augmentFixturesWithFollows = function (userFixtures, relativeToUserId) {
+    var augmentedUserFixtures = [];
+
+    for(var i = 0; i < userFixtures.length; i++) {
+      augmentedUserFixtures += augmentSingleUserWithFollows();
+    }
+    return augmentedUserFixtures;
+  };
+
   usersRouter.get('/', function(req, res) {
+    var defaultUser = 'davidchchang';
     if (req.query.isAuthenticated) {
       return res.status(200).send({
-        'users': [userFixtures['davidchchang']]
+        'users': [userFixtures[defaultUser]]
       });
     }
+    if (req.body.user) {
+      defaultUser = req.body.user.userid;
+    }
+    var augmentedUsers = augmentFixturesWithFollows(userFixtures, defaultUser);
     return res.status(200).send({
-      'users': userFixtures
+      'users': augmentedUsers
     });
   });
 
@@ -118,8 +144,13 @@ module.exports = function(app) {
       return res.status(404).send('User ' + userid + ' not found');
     }
 
+    var defaultUser = 'davidchchang';
+    if (req.body.user) {
+      defaultUser = req.body.user.userid;
+    }
+
     res.status(200).send({
-      user: userFixtures[userid]
+      user: augmentSingleUserWithFollows(userFixtures[userid], defaultUser)
     });
   });
 
