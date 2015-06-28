@@ -12,8 +12,8 @@
 
   <div class="third">
     <div class="user relative-center-y">
-      <a class="avatar link"><img src="/assets/images/avatars/{{session.authenticatedUser.id}}.png"/></a>
-      <a class="name dark-gray-link">{{session.authenticatedUser.name}}</a>
+      {{#link-to 'user.posts' session.authenticatedUser class="avatar link"}}<img src="/assets/images/avatars/{{session.authenticatedUser.id}}.png"/>{{/link-to}}
+      {{#link-to 'user.posts' session.authenticatedUser class="name dark-gray-link"}}{{session.authenticatedUser.name}}{{/link-to}}
       {{link-to "Log out" 'logout' class='logout dark-gray-link'}}
     </div>
   </div>

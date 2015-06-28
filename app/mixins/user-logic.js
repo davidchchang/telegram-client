@@ -2,16 +2,21 @@ import Ember from 'ember';
 
 export default Ember.Mixin.create({
   actions: {
+    /**
+     * Toggles whether the current user is following this user.
+     *
+     * @param user user to follow/unfollow
+     */
     follow: function (user) {
       var controller = this;
 
-      var newFollow = this.store.createRecord('user', {
-        name: user.name,
-        operation: 'follow'
+      user.setProperties({
+        operation: user.followedByCurrentUser ? 'unfollow' : 'follow',
+        followedByCurrentUser: !user.followedByCurrentUser
       });
 
-      newFollow.save().then(function (user) {
-        // TODO: update UI as followed
+      user.save().then(function (user) {
+        controller.set('user', user);
       }, controller.errorHandler.bind(controller));
     }
   }

@@ -918,6 +918,55 @@ body {
   color: #222;
 }
 
+.user-profile .avatar {
+  text-align: center;
+  display: block;
+}
+
+.user-profile .avatar img {
+  width: 100px;
+  height: 100px;
+}
+
+.user-profile .name {
+  clear: both;
+  text-align: center;
+  font-weight: bold;
+  font-size: 11pt;
+  padding-top: 10px;
+  display: block;
+}
+
+.user-profile .handle {
+  text-align: center;
+  display: block;
+}
+
+.user-profile .follow-container {
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-nav {
+  text-align: center;
+  text-decoration: none;
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+  padding: 10px;
+}
+
+.profile-nav a {
+  font-size: 17px;
+  padding: 10px 10px;
+}
+
+.profile-nav a.active {
+  color: #666666;
+  border-bottom: 3px solid #178db6;
+}
+
 .error-page {
   display: flex;
   position: absolute;

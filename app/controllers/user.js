@@ -10,12 +10,5 @@ export default Ember.Controller.extend(UserLogicMixin, {
     } else {
       alert('Oops');
     }
-  },
-
-  actions: {
-    // TODO: move to followers/following mixin?
-    follow: function() {
-      var controller = this;
-    }
   }
 });
