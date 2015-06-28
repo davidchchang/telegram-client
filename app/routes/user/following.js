@@ -5,7 +5,7 @@ export default Ember.Route.extend({
 
   model: function (params, transition) {
     var currentUser = this.get('session.authenticatedUser');
-    var relativeTo = transition.params.user.user_id;
-    return this.store.find('user');
+    var userId = transition.params.user.user_id;
+    return Ember.$.getJSON('/api/users/' + userId + '/following');
   }
 });

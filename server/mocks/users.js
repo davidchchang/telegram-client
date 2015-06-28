@@ -63,22 +63,28 @@ module.exports = function(app) {
     var augmentedUserFixtures = [];
 
     for(var i = 0; i < userFixtures.length; i++) {
-      augmentedUserFixtures += augmentSingleUserWithFollows();
+      augmentedUserFixtures.push(augmentSingleUserWithFollows(userFixtures[i], relativeToUserId));
     }
     return augmentedUserFixtures;
   };
 
+  var getAuthenticatedUserFromRequestBody = function (requestBody) {
+    var sessionUser = 'davidchchang';
+    if (requestBody.authenticatedUser) {
+      sessionUser = requestBody.authenticatedUser.userid;
+    }
+    return sessionUser;
+  };
+
   usersRouter.get('/', function(req, res) {
-    var defaultUser = 'davidchchang';
+    var sessionUser = getAuthenticatedUserFromRequestBody(req.body);
     if (req.query.isAuthenticated) {
       return res.status(200).send({
-        'users': [userFixtures[defaultUser]]
+        'users': [userFixtures[sessionUser]]
       });
     }
-    if (req.body.user) {
-      defaultUser = req.body.user.userid;
-    }
-    var augmentedUsers = augmentFixturesWithFollows(userFixtures, defaultUser);
+
+    var augmentedUsers = augmentFixturesWithFollows(userFixtures, sessionUser);
     return res.status(200).send({
       'users': augmentedUsers
     });
@@ -144,13 +150,50 @@ module.exports = function(app) {
       return res.status(404).send('User ' + userid + ' not found');
     }
 
-    var defaultUser = 'davidchchang';
-    if (req.body.user) {
-      defaultUser = req.body.user.userid;
-    }
+    var sessionUser = getAuthenticatedUserFromRequestBody(req.body);
 
     res.status(200).send({
-      user: augmentSingleUserWithFollows(userFixtures[userid], defaultUser)
+      user: augmentSingleUserWithFollows(userFixtures[userid], sessionUser)
+    });
+  });
+
+  usersRouter.get('/:id/followers', function(req, res) {
+    var userIds = Object.keys(userFixtures),
+      userid = req.params.id;
+
+    if (userIds.indexOf(userid) === -1) {
+      return res.status(404).send('User ' + userid + ' not found');
+    }
+
+    var sessionUser = getAuthenticatedUserFromRequestBody(req.body);
+    var followers = followsMapping.keys().filter(function(username) {
+      return followsMapping[username].indexOf(userid) >= 0;
+    });
+    var followerUsers = followers.map(function(username) {
+      return userFixtures[username];
+    });
+
+    res.status(200).send({
+      users: augmentFixturesWithFollows(followerUsers, sessionUser)
+    });
+  });
+
+  usersRouter.get('/:id/following', function(req, res) {
+    var userIds = Object.keys(userFixtures),
+      userid = req.params.id;
+
+    if (userIds.indexOf(userid) === -1) {
+      return res.status(404).send('User ' + userid + ' not found');
+    }
+
+    var sessionUser = getAuthenticatedUserFromRequestBody(req.body);
+    var following = followsMapping[userid] || [];
+    var followingUsers = following.map(function(username) {
+      return userFixtures[username];
+    });
+
+    res.status(200).send({
+      users: augmentFixturesWithFollows(followingUsers, sessionUser)
     });
   });
 
@@ -162,6 +205,7 @@ module.exports = function(app) {
     }
 
     var userid = req.params.id;
+    var sessionUser;
 
     if (!userid || (userid.trim && !userid.trim())) {
       return res.status(404).send('User ID cannot be blank');
@@ -175,6 +219,35 @@ module.exports = function(app) {
         return res.status(404).send('Invalid password');
       }
       return res.status(200).send({user: userFixtures[userid]});
+    } else if (req.body.user.meta.operation === 'follow') {
+      if (userIds.indexOf(userid) === -1) {
+        return res.status(404).send('User ' + userid + ' not found');
+      }
+
+      sessionUser = getAuthenticatedUserFromRequestBody(req.body);
+      if (followsMapping[sessionUser] === undefined) {
+        followsMapping[sessionUser] = [];
+      }
+      if (followsMapping[sessionUser].indexOf(userid) >= 0) {
+        return res.status(400).send('Already following user');
+      }
+      followsMapping[sessionUser].push(userid);
+      return res.status(200).send({user: augmentSingleUserWithFollows(userFixtures[userid], sessionUser)});
+    } else if (req.body.user.meta.operation === 'unfollow') {
+      if (userIds.indexOf(userid) === -1) {
+        return res.status(404).send('User ' + userid + ' not found');
+      }
+
+      sessionUser = getAuthenticatedUserFromRequestBody(req.body);
+      if (followsMapping[sessionUser] === undefined) {
+        followsMapping[sessionUser] = [];
+      }
+      var indexOfUser = followsMapping[sessionUser].indexOf(userid);
+      if (indexOfUser === -1) {
+        return res.status(400).send('User is not following ' + userid);
+      }
+      followsMapping[sessionUser].splice(indexOfUser, 1);
+      return res.status(200).send({user: augmentSingleUserWithFollows(userFixtures[userid], sessionUser)});
     }
 
     return res.status(400).send('Unsupported operation: ' + req.body.user.meta.operation);
