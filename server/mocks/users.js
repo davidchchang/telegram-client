@@ -166,8 +166,8 @@ module.exports = function(app) {
     }
 
     var sessionUser = getAuthenticatedUserFromRequestBody(req.body);
-    var followers = followsMapping.keys().filter(function(username) {
-      return followsMapping[username].indexOf(userid) >= 0;
+    var followers = Object.keys(followsMapping).filter(function(username) {
+      return followsMapping[username] && followsMapping[username].indexOf(userid) >= 0;
     });
     var followerUsers = followers.map(function(username) {
       return userFixtures[username];

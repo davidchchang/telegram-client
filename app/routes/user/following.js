@@ -6,6 +6,10 @@ export default Ember.Route.extend({
   model: function (params, transition) {
     var currentUser = this.get('session.authenticatedUser');
     var userId = transition.params.user.user_id;
-    return Ember.$.getJSON('/api/users/' + userId + '/following');
+    return DS.PromiseObject.create({
+      promise: Ember.$.getJSON('/api/users/' + userId + '/following')
+    }).then(function(obj) {
+      return obj.users.toArray();
+    });
   }
 });
