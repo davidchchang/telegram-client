@@ -10,14 +10,25 @@ export default Ember.Mixin.create({
     follow: function (user) {
       var controller = this;
 
-      user.setProperties({
-        operation: user.followedByCurrentUser ? 'unfollow' : 'follow',
-        followedByCurrentUser: !user.followedByCurrentUser
-      });
+      // TODO: is there a cleaner way?
+      function setPropertiesAndSave(profileUser) {
+        profileUser.setProperties({
+          operation: profileUser.get('followedByCurrentUser') ? 'unfollow' : 'follow'
+        });
+        profileUser.save().then(function (user) {
+          controller.set('user', user);
+          // TODO: trigger model update in following/followers view
+        }, controller.errorHandler.bind(controller));
+      }
 
-      user.save().then(function (user) {
-        controller.set('user', user);
-      }, controller.errorHandler.bind(controller));
+      var profileUser = this.store.getById('user', user.id);
+      if (!profileUser) {
+        this.store.find('user', user.id).then(function(profileUser) {
+          setPropertiesAndSave(profileUser);
+        });
+      } else {
+        setPropertiesAndSave(profileUser);
+      }
     }
   }
 });

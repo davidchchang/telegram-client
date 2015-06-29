@@ -967,6 +967,10 @@ body {
   border-bottom: 3px solid #178db6;
 }
 
+.user-block .name a {
+  color: #666666;
+}
+
 .error-page {
   display: flex;
   position: absolute;

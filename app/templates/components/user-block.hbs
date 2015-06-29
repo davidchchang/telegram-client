@@ -1,8 +1,10 @@
-  <div class="post-block clearfix">
+  <div class="user-block clearfix">
     {{#link-to 'user' user class="avatar link"}}<img src="/assets/images/avatars/{{user.id}}.png"/>{{/link-to}}
 
     <div class="content">
-      <div class="author">{{#link-to 'user' user class="link"}}{{user.name}}{{/link-to}}</div>
-      <div class="text">{{#if user.followedByCurrentUser}}You are following this user{{/if}}</div>
+      <div class="name">{{#link-to 'user' user class="link"}}{{user.name}}{{/link-to}}</div>
+        <div class="blue-btn follow" {{action 'follow' user}}>
+          {{if user.followedByCurrentUser 'Unfollow' 'Follow'}}
+        </div>
     </div>
   </div>
